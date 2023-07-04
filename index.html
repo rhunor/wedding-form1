@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Event RSVP</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #F36265, #961276, #7E47A1, #3A5AA7, #4CB8C4, #F7A65D);
+      color: #fff;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 5px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    .form-group label {
+      color: #333;
+      font-weight: bold;
+    }
+
+    .form-control {
+      background-color: #fff;
+      color: #333;
+    }
+
+    textarea.form-control {
+      min-height: 150px;
+    }
+
+    .btn-primary {
+      background-color: #333;
+      border-color: #333;
+    }
+
+    .btn-primary:hover {
+      background-color: #222;
+      border-color: #222;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 14px;
+      color: #999;
+    }
+
+    .footer a {
+      color: #999;
+      text-decoration: none;
+    }
+  </style>
+  <script>
+    function submitForm(event) {
+      event.preventDefault();
+      var form = document.getElementById("rsvpForm");
+      var formData = new FormData(form);
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "https://script.google.com/macros/s/AKfycbw1pOQR3pAA4v_MX31-9Kq1o2EfKcSIwg_Co3SgLOHQiB3nRyw2bMGV5E1dq9-OECA5rA/exec", true);
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          form.reset();
+          window.location.href = "success.html";
+        } else {
+          console.error("Form submission failed. Status code: " + xhr.status);
+        }
+      };
+      xhr.onerror = function() {
+        console.error("Form submission error.");
+      };
+      xhr.send(formData);
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>Event RSVP</h1>
+    <form id="rsvpForm" onsubmit="submitForm(event)">
+      <div class="form-group">
+        <label for="attend">Can you attend?</label>
+        <select class="form-control" id="attend" name="attend" required>
+          <option value="yes">Yes, I'll be there</option>
+          <option value="no">Sorry, can't make it</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="fullName">What is your Full Name?</label>
+        <input type="text" class="form-control" id="fullName" name="fullName" required>
+      </div>
+
+      <div class="form-group">
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="number" class="form-control" id="phoneNumber" name="phoneNumber" pattern="[0-9]{10}" required>
+      </div>
+
+      <div class="form-group">
+        <label for="relationship">Relationship to couple:</label>
+        <select class="form-control" id="relationship" name="relationship" required>
+          <option value="brideGuest">Bride's Guest</option>
+          <option value="groomGuest">Groom's Guest</option>
+          <option value="others">Others</option>
+        </select>
+        <input type="text" class="form-control mt-2" id="relationshipText" name="relationshipText" placeholder="Specify Relationship">
+      </div>
+
+      <div class="form-group">
+        <label for="additionalInfo">Any additional information we should know concerning your presence that we should make preparations for?</label>
+        <textarea class="form-control" id="additionalInfo" name="additionalInfo"></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <div class="footer">
+      Made With ❤ by <a href="https://jrhunor.com" target="_blank">John Rhunor</a>
+    </div>
+  </div>
+</body>
+</html>
