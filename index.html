@@ -81,17 +81,29 @@
       var formData = new FormData(form);
       var xhr = new XMLHttpRequest();
       xhr.open("POST", "https://script.google.com/macros/s/AKfycbw1pOQR3pAA4v_MX31-9Kq1o2EfKcSIwg_Co3SgLOHQiB3nRyw2bMGV5E1dq9-OECA5rA/exec", true);
+      
+      // Disable submit button and show loader
+      var submitButton = form.querySelector("button[type='submit']");
+      submitButton.disabled = true;
+      submitButton.innerHTML = "Submitting...";
+      
       xhr.onload = function() {
         if (xhr.status === 200) {
           form.reset();
           window.location.href = "success.html";
         } else {
           console.error("Form submission failed. Status code: " + xhr.status);
+          submitButton.disabled = false; // Enable submit button on error
+          submitButton.innerHTML = "Submit";
         }
       };
+      
       xhr.onerror = function() {
         console.error("Form submission error.");
+        submitButton.disabled = false; // Enable submit button on error
+        submitButton.innerHTML = "Submit";
       };
+      
       xhr.send(formData);
     }
   </script>
